@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:13:24 by dacortes          #+#    #+#             */
-/*   Updated: 2023/06/30 16:39:24 by dacortes         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:40:32 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	msg_error(int e, int exit_)
 {
 	e == E_FA && ft_printf("client: Too few arguments");
 	e == E_MA && ft_printf("client: Too many arguments");
-	e == E_KL && ft_printf("client: No connection with server")
+	e == E_KL && ft_printf("client: No connection with server");
 	return (exit_);
 }
 
