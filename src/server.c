@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:12:53 by dacortes          #+#    #+#             */
-/*   Updated: 2023/06/30 16:15:08 by dacortes         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:48:16 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	confirm(void)
 
 int	main(void)
 {
-	int	pid;
+	pid_t	pid;
 
 	pid = getpid();
 	if (!pid)
@@ -54,7 +54,7 @@ int	main(void)
 	else
 		ft_printf("Server PID: %i\n", getpid());
 	confirm();
-	while (1)
+	while (TRUE)
 		sleep(1);
-	return (0);
+	return (SUCCESS);
 }
