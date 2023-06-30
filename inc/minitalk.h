@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:16:28 by dacortes          #+#    #+#             */
-/*   Updated: 2023/06/09 18:20:18 by dacortes         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:39:21 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@
 # define TRUE	 1
 # define ERROR 	-1
 # define E_EXIT  1
+
+/* Errors */
+# define E_FA 1
+# define E_MA 2
+# define E_KL 3
 
 // ================================= COLORS ================================= //
 

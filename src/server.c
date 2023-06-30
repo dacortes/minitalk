@@ -6,14 +6,55 @@
 /*   By: dacortes <dacortes@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:12:53 by dacortes          #+#    #+#             */
-/*   Updated: 2023/06/09 18:21:54 by dacortes         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:15:08 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/minitalk.h"
 
-int main(void)
+void	handler(int sig)
 {
-	ft_printf(B"Inicio de server\n"E);
-	return (SUCCESS);
+	static int				bite = 0;
+	static unsigned char	ch = '\0';
+
+	ch <<= 1;
+	if (sig == SIGUSR1)
+		ch |= 1;
+	bite++;
+	if (bite == 8)
+	{
+		if ((int)ch <= 126)
+			ft_printf("%c", ch);
+		else if ((int)ch >= 127)
+			ft_printf("%c", ch);
+		bite = 0;
+		ch = '\0';
+	}
+}
+
+void	confirm(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = handler;
+	sa.sa_flags = SA_RESTART;
+	if (sigaction(SIGUSR1, &sa, NULL) == -1)
+		exit(EXIT_FAILURE);
+	if (sigaction(SIGUSR2, &sa, NULL) == -1)
+		exit(EXIT_FAILURE);
+}
+
+int	main(void)
+{
+	int	pid;
+
+	pid = getpid();
+	if (!pid)
+		ft_printf("NO PID");
+	else
+		ft_printf("Server PID: %i\n", getpid());
+	confirm();
+	while (1)
+		sleep(1);
+	return (0);
 }

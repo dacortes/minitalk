@@ -6,7 +6,7 @@
 #    By: dacortes <dacortes@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/09 17:39:21 by dacortes          #+#    #+#              #
-#    Updated: 2023/06/09 18:12:13 by dacortes         ###   ########.fr        #
+#    Updated: 2023/06/15 18:02:21 by dacortes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,13 @@ LIBC = ar -rcs
 FLAGS = -Wall -Wextra -Werror #-fsanitize=address
 N_CLIENT = client
 N_SERVER = server
+################################################################################
+#	Bar									                                       #
+################################################################################
+C_FILE_CLIENT = 0
+P_BAR_CLIENT :=
+C_FILE_SERVER = 0
+P_BAR_SERVER :=
 CURRENT_FILE = 0
 PROGRESS_BAR :=
 ################################################################################
@@ -78,12 +85,15 @@ dir:
 	-mkdir  $(D_OBJ)
 $(D_OBJ)/%.o:$(L_SRC)/%.c
 	$(CC) -MMD $(FLAGS) -c $< -o $@ $(INC)
-	$(eval CURRENT_FILE := $(shell echo $$(($(CURRENT_FILE) + 1)))) \
-	$(eval PROGRESS_BAR := $(shell awk "BEGIN { printf \"%.0f\", $(CURRENT_FILE)*100/$(TOTAL_FILES) }")) \
-	printf "$B$(ligth)⏳Compiling pipex:$E $(ligth)%-30s [%-50s] %d%%\r" "$<..." "$(shell printf '=%.0s' {1..$(shell echo "$(PROGRESS_BAR)/2" | bc)})" $(PROGRESS_BAR)
+#$(eval CURRENT_FILE := $(shell echo $$(($(CURRENT_FILE) + 1)))) \
+#$(eval PROGRESS_BAR := $(shell awk "BEGIN { printf \"%.0f\", $(CURRENT_FILE)*100/$(TOTAL_FILES) }")) \
+#printf "$B$(ligth)⏳Compiling pipex:$E $(ligth)%-30s [%-50s] %d%%\r" "$<..." "$(shell printf '=%.0s' {1..$(shell echo "$(PROGRESS_BAR)/2" | bc)})" $(PROGRESS_BAR)
 
 $(N_SERVER): $(OBJ_SERVER)
 	$(CC) $(FLAGS) $(OBJ_SERVER) $(L_LIB) -o $(N_SERVER) $(INC)
+	$(eval C_FILE_SERVER := $(shell echo $$(($(C_FILE_SERVER) + 1)))) \
+	$(eval PROGRESS_BAR := $(shell awk "BEGIN { printf \"%.0f\", $(C_FILE_SERVER)*100/$(TOTAL_SERVER) }")) \
+	printf "$B$(ligth)⏳Compiling server:$E $(ligth)%-30s [%-50s] %d%%\r" "$<..." "$(shell printf '=%.0s' {1..$(shell echo "$(P_BAR_SERVER)/2" | bc)})" $(P_BAR_SERVER)
 
 $(N_CLIENT): $(OBJ_CLIENT)
 	$(CC) $(FLAGS) $(OBJ_CLIENT) $(L_LIB) -o $(N_CLIENT) $(INC)
@@ -91,7 +101,6 @@ $(N_CLIENT): $(OBJ_CLIENT)
 $(NAME): $(OBJ_SERVER) $(OBJ_CLIENT)
 	$(MAKE) $(N_SERVER)
 	$(MAKE) $(N_CLIENT)
-	touch $(NAME)
 	echo "\n\n✅ ==== $(B)$(ligth)Project minitalk compiled!$(E) ==== ✅"
 
 ################################################################################
@@ -102,11 +111,13 @@ $(NAME): $(OBJ_SERVER) $(OBJ_CLIENT)
 fclean: clean
 	$(RM) $(NAME)
 	make fclean -C $(LIBFT)
-	echo "✅ ==== $(P)$(ligth)pipex object files cleaned!$(E) ==== ✅"
+	echo "✅ ==== $(P)$(ligth)pipex executable files and name cleaned!$(E) ==== ✅\n"
 clean:
 	$(RM) $(D_OBJ)
 	make clean -C $(LIBFT)
-	echo "✅ ==== $(P)$(ligth)pipex executable files and name cleaned!$(E) ==== ✅\n"
+	echo "✅ ==== $(P)$(ligth)pipex object files cleaned!$(E) ==== ✅"
 re: fclean all
+TOTAL_CLIENT := $(words $(SRC_CLIENT))
+TOTAL_SERVER := $(words $(SRC_SERVER))
 TOTAL_FILES := $(words $(SRC))
 .SILENT:
