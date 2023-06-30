@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:13:24 by dacortes          #+#    #+#             */
-/*   Updated: 2023/06/30 16:40:32 by dacortes         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:45:58 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int ac, char **av)
 	i = -1;
 	if  (ac <= 2)
 		return (msg_error(E_FA, ERROR));
-	if  (ac <= 4)
+	if  (ac >= 4)
 		return (msg_error(E_MA, ERROR));
 	pid = ft_atoi(av[1]);
 	while (av[2][++i])
