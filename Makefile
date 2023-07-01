@@ -6,7 +6,7 @@
 #    By: dacortes <dacortes@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/09 17:39:21 by dacortes          #+#    #+#              #
-#    Updated: 2023/07/01 12:04:18 by dacortes         ###   ########.fr        #
+#    Updated: 2023/07/01 12:07:43 by dacortes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,13 +73,13 @@ italic = \033[3m
 #							 MAKE RULES                                        #
 ################################################################################
 all: dir
-	$(MAKE) $(N_SERVER)
-	$(MAKE) $(N_CLIENT)
+	$(MAKE) $(N_SERVER) --no-print-directory
+	$(MAKE) $(N_CLIENT) --no-print-directory
 
 -include $(DEP_SERVER)
 -include $(DEP_CLIENT)
 dir:
-	make -C $(LIBFT)
+	make -C $(LIBFT) --no-print-directory
 	-mkdir  $(D_OBJ)
 
 $(D_OBJ)/%.o:$(L_SRC)/%.c
@@ -105,11 +105,11 @@ $(N_CLIENT): $(OBJ_CLIENT)
 .PHONY: all clean fclean re
 fclean: clean
 	$(RM) $(NAME) $(N_CLIENT) $(N_SERVER)
-	make fclean -C $(LIBFT)
+	make fclean -C $(LIBFT) --no-print-directory
 	echo "✅ ==== $(P)$(ligth)pipex executable files and name cleaned!$(E) ==== ✅\n"
 clean:
 	$(RM) $(D_OBJ)
-	make clean -C $(LIBFT)
+	make clean -C $(LIBFT) --no-print-directory
 	echo "✅ ==== $(P)$(ligth)pipex object files cleaned!$(E) ==== ✅"
 re: fclean all
 TOTAL_FILES := $(words $(SRC))

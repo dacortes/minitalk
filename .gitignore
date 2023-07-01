@@ -3,4 +3,5 @@
 *.o
 *.a
 *.vscode
+obj
 minitalk
