@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:13:24 by dacortes          #+#    #+#             */
-/*   Updated: 2023/06/30 16:45:58 by dacortes         ###   ########.fr       */
+/*   Updated: 2023/07/01 12:14:27 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ int	msg_error(int e, int exit_)
 
 void	send_sig(int pid, int sig)
 {
-	if (kill(pid, sig) == -1)
+	if (kill(pid, sig) == ERROR)
 		exit (msg_error(E_KL, EXIT_FAILURE));
-	usleep(100);
+	if (usleep(100) == ERROR)
+		exit (msg_error(E_US, EXIT_FAILURE));
 }
 
 void	conv_bin(const int pid, char ch, int bite)
@@ -36,7 +37,8 @@ void	conv_bin(const int pid, char ch, int bite)
 		else
 			send_sig(pid, SIGUSR2);
 		bite--;
-		usleep(200);
+		if (usleep(200) == ERROR)
+			exit (msg_error(E_US, EXIT_FAILURE));
 	}
 }
 
@@ -46,9 +48,9 @@ int	main(int ac, char **av)
 	int		i;
 
 	i = -1;
-	if  (ac <= 2)
+	if (ac <= 2)
 		return (msg_error(E_FA, ERROR));
-	if  (ac >= 4)
+	if (ac >= 4)
 		return (msg_error(E_MA, ERROR));
 	pid = ft_atoi(av[1]);
 	while (av[2][++i])
